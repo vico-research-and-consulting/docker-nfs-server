@@ -3,6 +3,7 @@
 set -e
 
 echo "#NFS Exports" > /etc/exports
+echo "exec inotifywait -m $@" >> /etc/sv/nfs/run
 
 for mnt in "$@"; do
   src=$(echo $mnt | awk -F':' '{ print $1 }')
