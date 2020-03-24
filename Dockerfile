@@ -7,6 +7,7 @@ COPY setups/nfs-common /etc/default/nfs-common
 COPY setups/nfs-kernel-server /etc/default/nfs-kernel-server
 COPY setups/quota /etc/default/quota
 COPY setups/nfs-static-ports.conf /etc/sysctl.d/nfs-static-ports.conf
+COPY setups/nfs /etc/sysconfig/nfs
 
 RUN mkdir -p /etc/sv/nfs
 ADD nfs.init /etc/sv/nfs/run
