@@ -33,6 +33,6 @@ RUN echo "nfs             32770/tcp" >> /etc/services
 
 VOLUME /polyaxon
 
-EXPOSE 111/udp 2049/tcp
+EXPOSE 111/udp 2049/tcp 32764 32765 32766 32767 32768 32769 32770
 
 ENTRYPOINT ["/usr/local/bin/nfs_setup"]
