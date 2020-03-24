@@ -22,12 +22,14 @@ RUN echo "nfs             32766/udp" >> /etc/services
 RUN echo "nfs             32767/udp" >> /etc/services
 RUN echo "nfs             32768/udp" >> /etc/services
 RUN echo "nfs             32769/udp" >> /etc/services
+RUN echo "nfs             32770/udp" >> /etc/services
 RUN echo "nfs             32764/tcp" >> /etc/services
 RUN echo "nfs             32765/tcp" >> /etc/services
 RUN echo "nfs             32766/tcp" >> /etc/services
 RUN echo "nfs             32767/tcp" >> /etc/services
 RUN echo "nfs             32768/tcp" >> /etc/services
 RUN echo "nfs             32769/tcp" >> /etc/services
+RUN echo "nfs             32770/tcp" >> /etc/services
 
 VOLUME /polyaxon
 
