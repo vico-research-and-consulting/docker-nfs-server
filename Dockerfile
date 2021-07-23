@@ -1,7 +1,7 @@
 FROM ubuntu
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -qq && apt-get install -y nfs-kernel-server runit inotify-tools -qq
-RUN mkdir -p /polyaxon
+RUN mkdir -p /exports
 
 COPY setups/nfs-common /etc/default/nfs-common
 COPY setups/nfs-kernel-server /etc/default/nfs-kernel-server
@@ -31,7 +31,7 @@ RUN echo "nfs             32767/tcp" >> /etc/services
 RUN echo "nfs             32768/tcp" >> /etc/services
 RUN echo "nfs             32769/tcp" >> /etc/services
 
-VOLUME /polyaxon
+VOLUME /exports
 
 EXPOSE 111/udp 2049/tcp 32764 32765 32766 32767 32768 32769
 
