@@ -1,4 +1,5 @@
-FROM ubuntu
+FROM ubuntu:20.04
+
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -qq && apt-get install -y nfs-kernel-server runit inotify-tools -qq
 RUN mkdir -p /exports
@@ -16,23 +17,25 @@ ADD nfs.stop /etc/sv/nfs/finish
 
 ADD nfs_setup.sh /usr/local/bin/nfs_setup
 
-RUN echo "nfs             2049/tcp" >> /etc/services
-RUN echo "nfs             111/udp" >> /etc/services
-RUN echo "nfs             32764/udp" >> /etc/services
-RUN echo "nfs             32765/udp" >> /etc/services
-RUN echo "nfs             32766/udp" >> /etc/services
-RUN echo "nfs             32767/udp" >> /etc/services
-RUN echo "nfs             32768/udp" >> /etc/services
-RUN echo "nfs             32769/udp" >> /etc/services
-RUN echo "nfs             32764/tcp" >> /etc/services
-RUN echo "nfs             32765/tcp" >> /etc/services
-RUN echo "nfs             32766/tcp" >> /etc/services
-RUN echo "nfs             32767/tcp" >> /etc/services
-RUN echo "nfs             32768/tcp" >> /etc/services
-RUN echo "nfs             32769/tcp" >> /etc/services
+RUN echo "rpc.nfsd 2049/tcp" >> /etc/services && \
+    echo "rpc.nfsd 2049/udp" >> /etc/services && \
+    echo "nfs 111/tcp" >> /etc/services && \
+    echo "nfs 111/udp" >> /etc/services && \
+    echo "rpc.statd-bc 32765/tcp" >> /etc/services && \
+    echo "rpc.statd-bc 32765/udp" >> /etc/services && \
+    echo "rpc.statd 32766/tcp" >> /etc/services && \
+    echo "rpc.statd 32766/udp" >> /etc/services && \
+    echo "rpc.mountd 32767/tcp" >> /etc/services && \
+    echo "rpc.mountd 32767/udp" >> /etc/services && \
+    echo "rcp.lockd 32768/tcp" >> /etc/services && \
+    echo "rcp.lockd 32768/udp" >> /etc/services && \
+    echo "rpc.quotad 32769/tcp" >> /etc/services && \
+    echo "rpc.quotad 32769/udp" >> /etc/services && \
+    mkdir -p /etc/modprobe.d/ && \
+    echo 'options lockd nlm_udpport=32768 nlm_tcpport=32768' >> /etc/modprobe.d/local.conf
 
 VOLUME /exports
 
-EXPOSE 111/udp 2049/tcp 32764 32765 32766 32767 32768 32769
+EXPOSE 111/tcp 111/udp 2049/tcp 2049/udp 32765-32769/tcp 32765-32769/udp
 
 ENTRYPOINT ["/usr/local/bin/nfs_setup"]
