@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update -qq && apt-get install -y nfs-kernel-server runit inotify-tools -qq
+RUN apt-get update -qq && apt-get install -y nfs-kernel-server runit inotify-tools unzip -qq
 RUN mkdir -p /exports
 
 COPY setups/nfs-common /etc/default/nfs-common
